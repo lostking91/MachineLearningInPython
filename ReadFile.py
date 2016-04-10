@@ -1,5 +1,5 @@
 #coding=utf-8
-# ��������	��������Lost
+# 我是中文	————Lost
 '''
 Read File on 2016.4.4
 file2mat -> savemat (-> readmat)
@@ -11,8 +11,13 @@ savemat
 save matrix as txt
 readmat
 load matrix
-
-
+——————————————————————————————————————————————————————————————————————
+you can use it like this:
+import ReadFile.py as *
+trainMat,trainLabel,testMat,testLabel=file2mat('filename',0.8)
+savetxt('savename',trainMat)
+Tmat=readmat('savename')
+——————————————————————————————————————————————————————————————————————
 PengKun
 '''
 from numpy import *
@@ -20,20 +25,20 @@ import operator
 from os import listdir
 import random
 import linecache
-print "���سɹ�"
-# savetxt��loadtxt�ʺ϶�д1ά�Ͷ�ά����
-# ��������,��%g�ĸ�ʽ���棬���ڻ�û�н�����������
+print "加载成功"
+# savetxt和loadtxt适合读写1维和二维数组
+# 保存数组,按%g的格式保存，现在还没有解决对齐的问题
 def savemat(filename,mat):
     "{:<10}".format(mat)
-    savetxt(filename,mat,fmt="%.6g")
-# ��ȡ����
+    savetxt(filename,mat,fmt="%g")
+# 读取数组
 def readmat(filename):
     return loadtxt(filename)
-# ���ѡ��
-# ������ĩλ��ǩ
+# 随机选数
+# 适用于末位标签
 def rand2mat(alldata,randpart):
     m,n=alldata.shape
-    n=n-1	#ȥ����ǩ
+    n=n-1	#去除标签
     randNumber=[i for i in range(m)]
     random.shuffle(randNumber)
     partition=int(randpart*m)
@@ -51,7 +56,7 @@ def rand2mat(alldata,randpart):
         testMat[j,:]=alldata[y, :-1]
         testLabel.append(int(alldata[y, -1]))
     return trainMat,trainLabel,testMat,testLabel
-# ��ȡ����
+# 读取数据
 def file2mat(filename,randpart):      
     fr = open(filename)
     numberOfLines = len(fr.readlines())         #get the number of lines in the file
